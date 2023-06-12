@@ -1,0 +1,16 @@
+.fav-icon {
+    cursor: pointer;
+    transition: transform 0.3s;
+    font-size: small;
+    margin: 4px;
+  }
+  
+  .fav-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  .fav-icon.favorited {
+    background-color: rgba(255, 0, 0, 0.258);
+  }
+
+  
