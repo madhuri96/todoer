@@ -28,3 +28,5 @@ Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
 - User Registration and JWT Token Authentication: When a user clicks on the "REGISTER" button, their details are securely stored in the database. If the user is successfully created, the client is redirected to the login page.
 - User Login and Authorization: When a user clicks on the "LOG IN" button, the entered email and password are validated by the server to authenticate the user.
 - Logout: When a user selects the "logout" option from the dropdown menu, their session data is cleared, and any necessary cleanup operations are performed.After the logout process is completed, the user is automatically redirected back to the login page.
+
+![Screenshot](./assets/Register.png)

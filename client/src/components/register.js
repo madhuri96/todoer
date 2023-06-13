@@ -42,7 +42,6 @@ const Register = () => {
 
   return (
     <div className='register-container'>
-      <h2>Register</h2>
       {errorMessage && <p className='error-message'>{errorMessage}</p>}
       {registrationSuccess ? (
         <>
