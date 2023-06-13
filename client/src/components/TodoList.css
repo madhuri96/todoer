@@ -1,11 +1,13 @@
 .todo-container {
   border: 1px solid #ccc;
-  padding: 10px;
+  padding: 35px;
+  padding-bottom: 0;
   border-radius: 4px;
-  margin-left: 100px;
+  margin-left: 250px;
   margin-right: 200px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 45vw;
 }
 
 .todo-list {
@@ -38,6 +40,11 @@
   flex-grow: 1;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+}
+
+.todo-check{
+  display: inline-flex;
 }
 
 .todo-title {
@@ -58,7 +65,8 @@
 
 .todo-actions {
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  justify-content: space-around;
 }
 
 .edit-button {

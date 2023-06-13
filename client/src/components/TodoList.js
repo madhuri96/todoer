@@ -208,57 +208,71 @@ const TodoList = ({
             className={`todo-item ${todo.status.toLowerCase()}`}
           >
             <div className='todo-content'>
-              <input
-                type='checkbox'
-                checked={selectedTodos.includes(todo.id)}
-                onChange={() => handleTodoSelect(todo.id)}
-              />
-              {editTodoId === todo.id ? (
-                <input
-                  type='text'
-                  className='todo-title-edit'
-                  defaultValue={todo.title}
-                  onKeyPress={(event) => handleUpdateTitle(event, todo.id)}
-                />
-              ) : (
-                <h3
-                  className={`todo-title ${
-                    selectedTodos.includes(todo.id) ? 'highlight' : ''
-                  }`}
-                >
-                  {todo.title}
-                </h3>
-              )}
+              <div className='todo-check'>
+                <div>
+                  <input
+                    type='checkbox'
+                    checked={selectedTodos.includes(todo.id)}
+                    onChange={() => handleTodoSelect(todo.id)}
+                  />
+                </div>
+                <div>
+                  {editTodoId === todo.id ? (
+                    <input
+                      type='text'
+                      className='todo-title-edit'
+                      defaultValue={todo.title}
+                      onKeyPress={(event) => handleUpdateTitle(event, todo.id)}
+                    />
+                  ) : (
+                    <h3
+                      className={`todo-title ${
+                        selectedTodos.includes(todo.id) ? 'highlight' : ''
+                      }`}
+                    >
+                      {todo.title}
+                    </h3>
+                  )}
+                </div>
+              </div>
               {/* <p className='todo-description'>{todo.description}</p> */}
               <div className='todo-actions'>
-                {todo.status !== 'Complete' && (
-                  <select
-                    className='status-select'
-                    value={todo.status}
-                    onChange={(event) => handleUpdateStatus(event, todo.id)}
+                <div className='actions'>
+                  {todo.status !== 'Complete' && (
+                    <select
+                      className='status-select'
+                      value={todo.status}
+                      onChange={(event) => handleUpdateStatus(event, todo.id)}
+                    >
+                      <option value='in-progress'>In Progress</option>
+                      <option value='on-hold'>On Hold</option>
+                      <option value='complete'>Complete</option>
+                    </select>
+                  )}
+                </div>
+                <div className='actions'>
+                  <button
+                    className='edit-button'
+                    onClick={() => handleEdit(todo.id)}
                   >
-                    <option value='in-progress'>In Progress</option>
-                    <option value='on-hold'>On Hold</option>
-                    <option value='complete'>Complete</option>
-                  </select>
-                )}
-                <button
-                  className='edit-button'
-                  onClick={() => handleEdit(todo.id)}
-                >
-                  📝
-                </button>
-                <button
-                  className='delete-button'
-                  onClick={() => handleDelete(todo.id, todo.title)}
-                >
-                  🗑️
-                </button>
-                <FavIcon
-                  todoId={todo.id}
-                  bookmarked={todo.bookmarked}
-                  onToggleBookmark={handleToggleBookmark}
-                />
+                    📝
+                  </button>
+                </div>
+                <div className='actions'>
+                  <button
+                    className='delete-button'
+                    onClick={() => handleDelete(todo.id, todo.title)}
+                  >
+                    🗑️
+                  </button>
+                </div>
+                <div className='actions'>
+                  <FavIcon
+                    todoId={todo.id}
+                    bookmarked={todo.bookmarked}
+                    onToggleBookmark={handleToggleBookmark}
+                  />
+                </div>
               </div>
             </div>
           </li>

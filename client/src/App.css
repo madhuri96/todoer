@@ -1,28 +1,32 @@
 .App {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    
-  }
+  text-align: center;
+  margin: 0;
+  padding: 0;
   
-  h1 {
-    color: #780707;
-    font-size: 40px;
-    margin-bottom: 5px;
-  }
+}
 
-  .container{
-    display: flex;
-  }
+h1 {
+  color: #780707;
+  font-size: 40px;
+  margin-bottom: 5px;
+}
 
-  .app-container {
-    width: 300px; 
-  }
-  
-  .content {
-    margin-top: auto;
-  }
-  
+.container{
+  display: flex;
+}
 
 
-  
+.content {
+  margin-top: auto;
+}
+
+.footerRegister {
+margin-left: 300px;
+}
+
+.footerLogin {
+  margin-left: 400px;
+}
+
+
+
