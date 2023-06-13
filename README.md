@@ -29,4 +29,61 @@ Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
 - User Login and Authorization: When a user clicks on the "LOG IN" button, the entered email and password are validated by the server to authenticate the user.
 - Logout: When a user selects the "logout" option from the dropdown menu, their session data is cleared, and any necessary cleanup operations are performed.After the logout process is completed, the user is automatically redirected back to the login page.
 
+## How to USE?
+
+URL: ` http://localhost:3000`
+
+### step 1:Users Registration using name,email, password.
+
 ![Screenshot](./assets/Register.png)
+
+### step 2:Users Login using email and password.
+
+![Screenshot](./assets/login.png)
+
+### step 3:Opens the home page
+
+![Screenshot](./assets/home.png)
+
+### step 4:Add Todo
+
+![Screenshot](./assets/addtodo.png)
+![Screenshot](./assets/todoAdded.png)
+
+### step 5: Search Todo (type todo name and press enter)
+
+![Screenshot](./assets/searchtodo.png)
+
+### step 6: Delete Todo
+
+![Screenshot](./assets/delete.png)
+
+### step 7:Filter Todo
+
+![Screenshot](./assets/filter.png)
+![Screenshot](./assets/filterS.png)
+
+### step 8:Select Todo
+
+![Screenshot](./assets/select.png)
+![Screenshot](./assets/selectall.png)
+
+### step 9:Edit Todo (type todo name and press enter)
+
+![Screenshot](./assets/edit.png)
+
+### step 10:Pagination
+
+![Screenshot](./assets/pagination.png)
+
+### step 11:Bookmark Todo
+
+![Screenshot](./assets/bookmark.png)
+
+### step 12:Todo Status
+
+![Screenshot](./assets/status.png)
+
+### step 13:Logout
+
+![Screenshot](./assets/logout.png)
