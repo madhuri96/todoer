@@ -8,6 +8,8 @@ import {
   Route,
   Link,
   useLocation,
+  Navigate,
+  Outlet,
 } from 'react-router-dom';
 import Home from './components/home';
 
@@ -35,6 +37,17 @@ const LoginFooter = () => {
   );
 };
 
+const ProtectedRoute = ({ element: Element, ...rest }) => {
+  const isAuthenticated = localStorage.getItem('token') !== null;
+  console.log(isAuthenticated);
+
+  return isAuthenticated ? (
+    <Outlet {...rest} element={<Element />} />
+  ) : (
+    <Navigate to='/login' replace={true} />
+  );
+};
+
 function App() {
   return (
     <Router>
@@ -45,7 +58,9 @@ function App() {
             <Routes>
               <Route exact path='/' element={<Register />} />
               <Route exact path='/login' element={<Login />} />
-              <Route exact path='/home' element={<Home />} />
+              <Route element={<ProtectedRoute />}>
+                <Route exact path='/home' element={<Home />} />
+              </Route>
             </Routes>
             <RegisterFooter />
             <LoginFooter />
