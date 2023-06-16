@@ -11,6 +11,21 @@ const Home = () => {
   const [todos, setTodos] = useState([]);
   const [userName, setUserName] = useState('');
 
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('/api/todos/categories');
+      setCategories(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -150,7 +165,7 @@ const Home = () => {
         </div>
       </div>
       <div className='content'>
-        <AddTodoForm onAddTodo={addTodo} />
+        <AddTodoForm onAddTodo={addTodo} categories={categories} />
         {todos !== undefined ? (
           <TodoList
             todos={todos}

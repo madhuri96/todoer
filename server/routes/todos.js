@@ -2,6 +2,19 @@ const express = require('express');
 const router = express.Router();
 const todoController = require('../controllers/todoController');
 const users_controller = require('../controllers/userController');
+const category_Controller = require('../controllers/categoryController');
+
+// GET /api/categories
+router.get('/categories', category_Controller.getCategories);
+
+// POST /api/categories
+router.post('/categories', category_Controller.createCategory);
+
+// PUT /api/categories/:id
+router.put('/categories/:id', category_Controller.updateCategory);
+
+// DELETE /api/categories/:id
+router.delete('/categories/:id', category_Controller.deleteCategory);
 
 router.post('/register', users_controller.register);
 router.post('/login', users_controller.login);

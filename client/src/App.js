@@ -12,6 +12,31 @@ import {
   Outlet,
 } from 'react-router-dom';
 import Home from './components/home';
+import CategoryForm from './components/categoryForm';
+
+const AddCategory = () => {
+  const location = useLocation();
+
+  return (
+    location.pathname === '/home' && (
+      <p className='addCategory'>
+        go to, <Link to='/categoryForm'>AddCategory here</Link>.
+      </p>
+    )
+  );
+};
+
+const CategoryFooter = () => {
+  const location = useLocation();
+
+  return (
+    location.pathname === '/categoryForm' && (
+      <p className='categoryFooter'>
+        go to, <Link to='/home'>Home</Link>.
+      </p>
+    )
+  );
+};
 
 const RegisterFooter = () => {
   const location = useLocation();
@@ -55,15 +80,20 @@ function App() {
         <h1>📝 TODOER</h1>
         <div className='container'>
           <div className='content'>
+            <div>
+              <AddCategory />
+            </div>
             <Routes>
               <Route exact path='/' element={<Register />} />
               <Route exact path='/login' element={<Login />} />
               <Route element={<ProtectedRoute />}>
                 <Route exact path='/home' element={<Home />} />
+                <Route exact path='/categoryForm' element={<CategoryForm />} />
               </Route>
             </Routes>
             <RegisterFooter />
             <LoginFooter />
+            <CategoryFooter />
           </div>
         </div>
       </div>

@@ -27,6 +27,7 @@ Open [http://localhost:8000](http://localhost:8000) to view it in your browser.
 - The heart icon visually represents the favorite status, toggling between a filled heart (❤️) and an empty heart (🖤).Animate when hovering over the heart icon to provide visual feedback to the user.and Bookmarking Favorited Items.
 - User Registration and JWT Token Authentication: When a user clicks on the "REGISTER" button, their details are securely stored in the database. If the user is successfully created, the client is redirected to the login page.
 - User Login and Authorization: When a user clicks on the "LOG IN" button, the entered email and password are validated by the server to authenticate the user.
+- Categories to every todo item.CRUD features include in category form.
 - Logout: When a user selects the "logout" option from the dropdown menu, their session data is cleared, and any necessary cleanup operations are performed.After the logout process is completed, the user is automatically redirected back to the login page.
 
 ## How to USE?
@@ -49,6 +50,9 @@ URL: ` http://localhost:3000`
 
 ![Screenshot](./assets/addtodo.png)
 ![Screenshot](./assets/todoAdded.png)
+
+- After adding categories
+  ![Screenshot](./assets/category.png)
 
 ### step 5: Search Todo (type todo name and press enter)
 
@@ -84,6 +88,12 @@ URL: ` http://localhost:3000`
 
 ![Screenshot](./assets/status.png)
 
-### step 13:Logout
+### step 13:Add Category
+
+![Screenshot](./assets/addcategory1.png)
+![Screenshot](./assets/addcategory2.png)
+![Screenshot](./assets/addcategory3.png)
+
+### step 14:Logout
 
 ![Screenshot](./assets/logout.png)
