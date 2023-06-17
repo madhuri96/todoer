@@ -28,11 +28,12 @@ exports.getTodoById = async (req, res) => {
 // Create a new todo
 exports.createTodo = async (req, res) => {
   try {
-    const { id, title, description, status } = req.body;
+    const { id, title, description, category, status } = req.body;
     const todo = new Todo({
       id,
       title,
       description,
+      category,
       status,
     });
     await todo.save();
@@ -46,10 +47,10 @@ exports.createTodo = async (req, res) => {
 // Update a todo
 exports.updateTodo = async (req, res) => {
   try {
-    const { title, description, status } = req.body;
+    const { title, description, category, status } = req.body;
     const todo = await Todo.updateOne(
       req.body.id,
-      { title, description, status },
+      { title, description, category, status },
       { new: true }
     );
     if (!todo) {
