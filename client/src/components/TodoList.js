@@ -3,6 +3,7 @@ import './TodoList.css';
 import Pagination from './Pagination';
 import SearchTodo from './SearchTodo';
 import FavIcon from './FavIcon';
+import SubtaskCreationDialog from './SubtaskCreationDialog';
 
 const TodoList = ({
   todos,
@@ -19,6 +20,7 @@ const TodoList = ({
   const [todosPerPage, setTodosPerPage] = useState(3);
   const [filteredTodos, setFilteredTodos] = useState(todos);
   const [bookmarkedTodos, setBookmarkedTodos] = useState([]);
+  const [openSubtaskDialogId, setOpenSubtaskDialogId] = useState(null);
 
   useEffect(() => {
     setFilteredTodos(filterTodos(todos, filter));
@@ -155,6 +157,14 @@ const TodoList = ({
     setBookmarkedTodos(bookmarks);
   };
 
+  const handleOpenSubtaskDialog = (todoId) => {
+    setOpenSubtaskDialogId(todoId);
+  };
+
+  const handleCloseSubtaskDialog = () => {
+    setOpenSubtaskDialogId(null);
+  };
+
   return (
     <div className='todo-container'>
       <SearchTodo onSearch={handleSearch} />
@@ -209,6 +219,24 @@ const TodoList = ({
           >
             <div className='todo-content'>
               <div className='todo-check'>
+                <div>
+                  {/* Add button */}
+                  <button onClick={() => handleOpenSubtaskDialog(todo.id)}>
+                    ➕
+                  </button>
+
+                  {/* Subtask dialog */}
+                  {openSubtaskDialogId === todo.id && (
+                    <SubtaskCreationDialog
+                      todoId={todo.id}
+                      onSaveSubtask={(subtask) => {
+                        // Handle saving the subtask
+                        console.log('Save subtask:', subtask);
+                        handleCloseSubtaskDialog();
+                      }}
+                    />
+                  )}
+                </div>
                 <div>
                   <input
                     type='checkbox'
