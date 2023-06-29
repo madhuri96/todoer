@@ -1,53 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const SubtaskCreationDialog = ({
   todoId,
   onSaveSubtask,
   subtask,
-  onUpdateSubtask,
   onDeleteSubtask,
 }) => {
   const [title, setTitle] = useState('');
-  const [editMode, setEditMode] = useState(false);
+  const [subtasks, setSubtasks] = useState([]);
 
-  const handleEdit = () => {
-    setEditMode(true);
-  };
+  useEffect(() => {
+    fetchSubtasks();
+  }, []);
 
-  const handleUpdate = () => {
-    // Check if subtask is defined before updating
-    if (!subtask) {
-      console.error('Subtask is undefined');
-      return;
-    }
-
+  const fetchSubtasks = () => {
     axios
-      .put(`/api/todos/${subtask.todoId}/subtasks/${subtask.id}`, { title })
+      .get(`/api/todos/${todoId}/subtasks`)
       .then((response) => {
-        onUpdateSubtask(subtask.id, title);
-        setEditMode(false);
+        setSubtasks(response.data);
       })
       .catch((error) => {
-        // Handle error
-        console.error('Error updating subtask:', error);
+        console.error('Error fetching subtasks:', error);
       });
   };
 
-  const handleDelete = () => {
+  const handleDelete = (currsubtask) => {
     // Check if subtask is defined before deleting
-    if (!subtask) {
-      console.error('Subtask is undefined');
+    if (!currsubtask) {
+      console.error('currsubtask not found');
       return;
     }
 
     axios
-      .delete(`/api/todos/${subtask.todoId}/subtasks/${subtask.id}`)
-      .then((response) => {
-        onDeleteSubtask(subtask.id);
+      .delete(`/api/todos/${todoId}/subtasks/${currsubtask._id}`)
+      .then(() => {
+        // Update the subtasks state by removing the deleted subtask
+        const updatedSubtasks = subtasks.filter(
+          (st) => st._id !== currsubtask._id
+        );
+        setSubtasks(updatedSubtasks);
+
+        // Notify the parent component about the delete
+        onDeleteSubtask(currsubtask._id);
+
+        console.log('Subtask deleted:', currsubtask._id);
       })
       .catch((error) => {
-        // Handle error
         console.error('Error deleting subtask:', error);
       });
   };
@@ -62,6 +61,7 @@ const SubtaskCreationDialog = ({
       .then((response) => {
         onSaveSubtask(response.data);
         setTitle('');
+        fetchSubtasks(); // Fetch the updated list of subtasks after saving a new one
       })
       .catch((error) => {
         // Handle error
@@ -85,25 +85,12 @@ const SubtaskCreationDialog = ({
       <button onClick={handleSave}>Save</button>
       <button onClick={handleCancel}>Cancel</button>
       <div className='subtask'>
-        {editMode ? (
-          <input
-            type='text'
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        ) : (
-          subtask && <p>{subtask.title}</p>
-        )}
-        <div className='subtask-actions'>
-          {editMode ? (
-            <button onClick={handleUpdate}>Save</button>
-          ) : (
-            <>
-              <button onClick={handleEdit}>📝</button>
-              <button onClick={handleDelete}>🗑️</button>
-            </>
-          )}
-        </div>
+        {subtasks.map((currsubtask) => (
+          <p key={currsubtask.id}>
+            {currsubtask.title}
+            <button onClick={() => handleDelete(currsubtask)}>🗑️</button>
+          </p>
+        ))}
       </div>
     </div>
   );

@@ -1,6 +1,7 @@
 const express = require('express');
 const config = require('./config/config');
 const todoRoutes = require('./routes/todos');
+const cors = require('cors');
 
 //require passport and JWT Strategy for auth
 const passport = require('passport');
@@ -10,6 +11,8 @@ const passportJWT = require('./config/passport-jwt-strategy');
 
 // Create Express app
 const app = express();
+
+app.use(cors());
 
 // Middleware
 app.use(express.json());

@@ -10,9 +10,11 @@
   "author": "Madhuri Bansode",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^7.2.2",
     "passport": "^0.6.0",
-    "passport-jwt": "^4.0.1"
+    "passport-jwt": "^4.0.1",
+    "shortid": "^2.2.16"
   }
 }

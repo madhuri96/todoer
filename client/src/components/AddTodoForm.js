@@ -30,17 +30,12 @@ const AddTodoForm = ({ onAddTodo }) => {
       title: title.trim(),
       description: description.trim(),
       category: selectedCategory,
-      id: generateRandomId(),
     };
     onAddTodo(newTodo);
     setTitle('');
     setDescription('');
     setSelectedCategory('');
   };
-
-  function generateRandomId() {
-    return Math.floor(Math.random() * 1000);
-  }
 
   return (
     <form onSubmit={handleSubmit}>

@@ -43,4 +43,7 @@ router.put('/:id/subtasks/:subtaskId', todoController.updateSubTask);
 // DELETE /api/todos/:id/subtasks/:subtaskId
 router.delete('/:id/subtasks/:subtaskId', todoController.deleteSubTask);
 
+// GET /api/todos/:id/subtasks
+router.get('/:id/subtasks', todoController.getSubtasks);
+
 module.exports = router;

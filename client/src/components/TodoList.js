@@ -221,20 +221,31 @@ const TodoList = ({
               <div className='todo-check'>
                 <div>
                   {/* Add button */}
-                  <button onClick={() => handleOpenSubtaskDialog(todo.id)}>
+                  <button onClick={() => handleOpenSubtaskDialog(todo._id)}>
                     ➕
                   </button>
 
                   {/* Subtask dialog */}
-                  {openSubtaskDialogId === todo.id && (
-                    <SubtaskCreationDialog
-                      todoId={todo.id}
-                      onSaveSubtask={(subtask) => {
-                        // Handle saving the subtask
-                        console.log('Save subtask:', subtask);
-                        handleCloseSubtaskDialog();
-                      }}
-                    />
+                  {openSubtaskDialogId === todo._id && (
+                    <div className='subtask-dialog'>
+                      <div className='subtask-dialog-content'>
+                        <SubtaskCreationDialog
+                          todoId={todo._id}
+                          subtask={todo.subtasks}
+                          subtakId={todo.subtasks._id}
+                          onSaveSubtask={(subtask) => {
+                            // Handle saving the subtask
+                            console.log('Save subtask:', subtask);
+                            handleCloseSubtaskDialog();
+                          }}
+                          onDeleteSubtask={(subtaskId) => {
+                            // Handle deleting the subtask
+                            console.log('Delete subtask:', subtaskId);
+                          }}
+                        />
+                        <p>{todo.subtasks.title}</p>
+                      </div>
+                    </div>
                   )}
                 </div>
                 <div>

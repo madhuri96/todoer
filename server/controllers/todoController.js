@@ -1,6 +1,5 @@
-const Todo = require('../models/todo');
-const mongoose = require('mongoose');
-const SubTask = require('../models/subtask');
+const { Todo, Subtask } = require('../models/todo');
+const shortid = require('shortid');
 
 // Get all todos
 exports.getTodos = async (req, res) => {
@@ -30,14 +29,11 @@ exports.getTodoById = async (req, res) => {
 // Create a new todo
 exports.createTodo = async (req, res) => {
   try {
-    const { id, title, description, category, status } = req.body;
-    const todo = new Todo({
-      id,
-      title,
-      description,
-      category,
-      status,
-    });
+    const { title, description, category, status } = req.body;
+    const id = shortid.generate(); // Generate a unique id
+    console.log(id);
+    const todo = new Todo({ id, title, description, category, status });
+    console.log(todo);
     await todo.save();
     res.json(todo);
   } catch (error) {
@@ -84,25 +80,23 @@ exports.deleteTodo = async (req, res) => {
 exports.createSubTask = async (req, res) => {
   console.log('hello');
   try {
-    const id = req.params;
-    const title = req.body;
+    const id = req.params.id;
+    const nid = shortid.generate();
+    const title = req.body.title;
 
     console.log(id);
-
-    const isValidObjectId = mongoose.Types.ObjectId.isValid(id);
-    if (!isValidObjectId) {
-      return res.status(404).json({ error: 'Invalid todo ID' });
-    }
 
     const todo = await Todo.findById(id);
     if (!todo) {
       return res.status(404).json({ error: 'Todo not found' });
     }
-
-    const subtask = new SubTask({
+    console.log(todo);
+    const subtask = new Subtask({
+      id: nid,
       title,
-      todoId: todo.id,
+      todo: todo._id,
     });
+
     console.log(subtask);
 
     await subtask.save();
@@ -120,18 +114,18 @@ exports.createSubTask = async (req, res) => {
 // Update a subtask
 exports.updateSubTask = async (req, res) => {
   try {
-    const { todoId, subtaskId } = req.params;
+    const { id, subtaskId } = req.params;
     const { title } = req.body;
 
-    const todo = await Todo.findById(todoId);
+    const todo = await Todo.findById(id);
     if (!todo) {
       return res.status(404).json({ error: 'Todo not found' });
     }
 
-    const subtask = await SubTask.updateOne(
-      { _id: subtaskId, todoId: todo._id },
+    const subtask = await Subtask.findOneAndUpdate(
+      { _id: subtaskId, id: todo._id },
       { title },
-      { new: true }
+      { new: true } // To return the updated subtask instead of the old one
     );
 
     if (!subtask) {
@@ -148,26 +142,51 @@ exports.updateSubTask = async (req, res) => {
 // Delete a subtask
 exports.deleteSubTask = async (req, res) => {
   try {
-    const { todoId, subtaskId } = req.params;
+    const { id, subtaskId } = req.params;
 
+    console.log(req.params);
+
+    console.log(id);
+    console.log(subtaskId);
+
+    const todo = await Todo.findById(id);
+    if (!todo) {
+      return res.status(404).json({ error: 'Todo not found' });
+    }
+
+    const subtask = await Subtask.findByIdAndDelete(subtaskId);
+    if (!subtask) {
+      return res.status(404).json({ error: 'Subtask not found' });
+    }
+
+    // Perform any additional actions after successful deletion, such as updating the todo
+    todo.subtasks.pull(subtask._id);
+    await todo.save();
+
+    res.json({ message: 'Subtask deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+};
+
+// Get all subtasks for a todo
+exports.getSubtasks = async (req, res) => {
+  try {
+    const todoId = req.params.id;
+
+    console.log(todoId);
+
+    // Retrieve the todo by its ID
     const todo = await Todo.findById(todoId);
     if (!todo) {
       return res.status(404).json({ error: 'Todo not found' });
     }
 
-    const subtask = await SubTask.deleteOne({
-      _id: subtaskId,
-      todoId: todo._id,
-    });
-
-    if (!subtask) {
-      return res.status(404).json({ error: 'Subtask not found' });
-    }
-
-    todo.subtasks.pull(subtask._id);
-    await todo.save();
-
-    res.json({ message: 'Subtask deleted successfully' });
+    // Fetch the subtasks associated with the todo
+    const subtasks = await Subtask.find({ todo: todoId });
+    console.log(subtasks);
+    res.json(subtasks);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Server error' });
